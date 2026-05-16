@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            color: #ff0000;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #ff0000;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .folder-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .folder-group input {
+            flex: 1;
+        }
+
+        .browse-btn {
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .browse-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ff0000;
+        }
+
+        .format-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .format-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .format-btn:hover {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .format-btn.active {
+            border-color: #ff0000;
+            background: rgba(255, 0, 0, 0.15);
+            color: #ff0000;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: none;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .status.loading {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+        }
+
+        .status.success {
+            background: rgba(0, 255, 100, 0.1);
+            color: #00ff64;
+            display: block;
+        }
+
+        .status.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff6464;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>▶ YT Downloader</h1>
+            <p>Download YouTube videos and audio instantly</p>
+        </div>
+
+        <div class="input-group">
+            <label>YouTube URL</label>
+            <input type="text" id="urlInput" placeholder="https://www.youtube.com/watch?v=..." />
+        </div>
+
+        <div class="input-group">
+            <label>Save Location (leave empty for Downloads folder)</label>
+            <input type="text" id="folderInput" placeholder="e.g. E:\MyVideos or leave empty" />
+        </div>
+
+        <div class="format-group">
+            <button class="format-btn active" id="mp4Btn" onclick="selectFormat('mp4')">🎬 MP4 Video</button>
+            <button class="format-btn" id="mp3Btn" onclick="selectFormat('mp3')">🎵 MP3 Audio</button>
+        </div>
+
+        <button class="download-btn" id="downloadBtn" onclick="startDownload()">
+            DOWNLOAD
+        </button>
+
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        let selectedFormat = "mp4";
+        let selectedFolder = "";
+
+        function selectFormat(format) {
+            selectedFormat = format;
+            document.getElementById("mp4Btn").classList.remove("active");
+            document.getElementById("mp3Btn").classList.remove("active");
+            document.getElementById(format + "Btn").classList.add("active");
+        }
+
+        async function browseFolder() {
+            const response = await fetch("/pick-folder");
+            const data = await response.json();
+            if (data.folder) {
+                selectedFolder = data.folder;
+                document.getElementById("folderInput").value = selectedFolder;
+            }
+        }
+
+        async function startDownload() {
+            const url = document.getElementById("urlInput").value.trim();
+            const statusEl = document.getElementById("status");
+            const downloadBtn = document.getElementById("downloadBtn");
+
+            if (!url) {
+                statusEl.className = "status error";
+                statusEl.textContent = "⚠️ Please enter a YouTube URL!";
+                return;
+            }
+
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = "Downloading...";
+            statusEl.className = "status loading";
+            statusEl.textContent = "⏳ Please wait, downloading your file...";
+
+            try {
+                const response = await fetch("/download", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: url, format: selectedFormat, folder: document.getElementById("folderInput").value.trim() })
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const downloadUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = downloadUrl;
+                    a.download = `video.${selectedFormat}`;
+                    a.click();
+                    window.URL.revokeObjectURL(downloadUrl);
+
+                    statusEl.className = "status success";
+                    statusEl.textContent = "✅ Download complete!";
+                } else {
+                    const data = await response.json();
+                    statusEl.className = "status error";
+                    statusEl.textContent = "❌ Error: " + data.error;
+                }
+
+            } catch (err) {
+                statusEl.className = "status error";
+                statusEl.textContent = "❌ Something went wrong. Try again!";
+            } finally {
+                downloadBtn.disabled = false;
+                downloadBtn.textContent = "DOWNLOAD";
+            }
+        }
+    </script>
+</body>
+</html>

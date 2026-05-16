@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      background-color: #222;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 10%;
+    }
+
+    nav h1 {
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #00bcd4;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(to right, #00bcd4, #007bff);
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+    }
+
+    /* About Section */
+    .about {
+      padding: 50px 10%;
+      text-align: center;
+    }
+
+    .about h2 {
+      margin-bottom: 20px;
+    }
+
+    .projects {
+      padding: 50px 10%;
+      background-color: #eee;
+    }
+
+    .projects h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .project-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 50px 10%;
+      text-align: center;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h1>Noor Hossain</h1>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h2>Hi, I'm Noor Hossain</h2>
+    <p>Software Engineer | Web Developer | Problem Solver</p>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>I’m a passionate software engineer who loves building creative and efficient digital solutions. I enjoy learning new technologies and creating impactful projects.</p>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2>My Projects</h2>
+    <div class="project-card">
+      <h3>Portfolio Website</h3>
+      <p>A simple and elegant personal website showcasing my work and skills.</p>
+    </div>
+    <div class="project-card">
+      <h3>Smart Attendance System</h3>
+      <p>A complete system with MySQL backend for managing attendance digitally.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Contact Me</h2>
+    <p>Email: <b>noorhossain@example.com</b></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Noor Hossain | All Rights Reserved
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dark Reptile Cursor</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    cursor:none;
+    background:
+        radial-gradient(circle at 20% 20%, #1b2735 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #0f3460 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, #16213e 0%, transparent 50%),
+        linear-gradient(135deg, #050505, #0a0f1c, #000);
+}
+
+/* BODY SEGMENTS */
+.segment{
+    position:absolute;
+    width:28px;
+    height:18px;
+    background:linear-gradient(145deg,#111,#000);
+    border-radius:50% 50% 40% 40%;
+    box-shadow:0 0 14px rgba(0,0,0,.9);
+    transform-origin:center;
+    pointer-events:none;
+}
+
+/* HEAD */
+.head{
+    width:44px;
+    height:32px;
+    clip-path:polygon(0% 50%,30% 0%,100% 50%,30% 100%);
+    background:linear-gradient(145deg,#1a1a1a,#000);
+    box-shadow:0 0 28px rgba(0,0,0,1);
+    z-index:10;
+}
+
+/* EYES */
+.eye{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:#ff1a1a;
+    border-radius:50%;
+    top:12px;
+    box-shadow:0 0 8px #ff1a1a;
+}
+.eye.left{left:10px;}
+.eye.right{right:10px;}
+
+/* LEGS */
+.leg{
+    position:absolute;
+    width:16px;
+    height:5px;
+    background:#050505;
+    border-radius:6px;
+    box-shadow:0 0 6px rgba(0,0,0,.9);
+    transform-origin:left center;
+    animation:walk .6s infinite alternate;
+}
+
+.front.left{ top:8px; left:-14px; }
+.front.right{ top:8px; right:-14px; animation-delay:.3s; }
+
+.back.left{ bottom:6px; left:-12px; animation-delay:.3s; }
+.back.right{ bottom:6px; right:-12px; }
+
+/* WALK ANIMATION */
+@keyframes walk{
+    from{ transform:rotate(-25deg); }
+    to{ transform:rotate(25deg); }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+const segments=[];
+const length=22;
+
+let mouseX=innerWidth/2;
+let mouseY=innerHeight/2;
+
+document.addEventListener("mousemove",e=>{
+    mouseX=e.clientX;
+    mouseY=e.clientY;
+});
+
+for(let i=0;i<length;i++){
+    const s=document.createElement("div");
+    s.classList.add("segment");
+
+    if(i===0){
+        s.classList.add("head");
+
+        s.innerHTML=`
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+
+            <div class="leg front left"></div>
+            <div class="leg front right"></div>
+            <div class="leg back left"></div>
+            <div class="leg back right"></div>
+        `;
+    }
+
+    document.body.appendChild(s);
+    segments.push({el:s,x:mouseX,y:mouseY});
+}
+
+function animate(){
+    let x=mouseX;
+    let y=mouseY;
+
+    segments.forEach(seg=>{
+        seg.x+=(x-seg.x)*0.25;
+        seg.y+=(y-seg.y)*0.25;
+
+        const dx=x-seg.x;
+        const dy=y-seg.y;
+        const angle=Math.atan2(dy,dx)*180/Math.PI;
+
+        seg.el.style.left=seg.x+"px";
+        seg.el.style.top=seg.y+"px";
+        seg.el.style.transform=`rotate(${angle}deg)`;
+
+        x=seg.x;
+        y=seg.y;
+    });
+
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+class Patient {
+    +String patientID
+    +String name
+    +String contact
+    +String email
+    --
+    +searchBeds(criteria): List<Bed>
+    +createBooking(data): Booking
+    +login(credentials): Boolean
+}
+
+class Staff {
+    +String staffID
+    +String name
+    +String role
+    --
+    +updateBedStatus(bedID, status): Boolean
+    +processAdmission(bookingID): AdmissionRecord
+    +processDischarge(admissionID): AdmissionRecord
+}
+
+class Department {
+    +String deptID
+    +String name
+    +String type
+    +Int capacity
+    --
+    +getAvailableBeds(): Int
+}
+
+class Bed {
+    +String bedID
+    +String bedNumber
+    +String type
+    +String status "Available, Occupied"
+    --
+    +isAvailable(): Boolean
+    +setStatus(status): Boolean
+}
+
+class Booking {
+    +String bookingID
+    +Date bookingDate
+    +Date requestedAdmissionDate
+    +String status "Pending, Confirmed"
+    --
+    +confirm(): Boolean
+    +cancel(): Boolean
+}
+
+class AdmissionRecord {
+    +String admissionID
+    +Date actualAdmissionDate
+    +Date dischargeDate
+    +String finalStatus
+    --
+    +calculateOccupancyDuration(): Duration
+}
+
+% Associations (Relationships)
+
+Patient "1" --> "*" Booking : places
+Booking "1" --> "1" Bed : reserves
+Bed "*" --> "1" Department : located_in
+Staff "1" --> "*" Bed : handles_status_updates
+Booking "1" --> "1" AdmissionRecord : leads_to
+Staff "1" --> "*" AdmissionRecord : manages_process

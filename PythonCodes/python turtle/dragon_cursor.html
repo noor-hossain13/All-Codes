@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dangerous Dragon Cursor Follower</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #0a0012;
+      height: 100vh;
+      cursor: none;
+    }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+
+<script>
+// === SETUP ===
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+let mouse = { x: 0, y: 0 };
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+window.addEventListener('mousemove', e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+// === DRAGON SETTINGS ===
+const segments = [];
+const segmentCount = 24;
+const segmentLength = 20;
+const headSize = 28;
+const stiffness = 0.20;     // snappy & predatory
+const damping = 0.89;
+
+for (let i = 0; i < segmentCount; i++) {
+  segments.push({
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+    vx: 0,
+    vy: 0
+  });
+}
+
+// === ANIMATION LOOP ===
+function animate() {
+  ctx.fillStyle = 'rgba(6, 0, 18, 0.15)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Head follows mouse
+  let head = segments[0];
+  let dx = mouse.x - head.x;
+  let dy = mouse.y - head.y;
+  head.vx += dx * stiffness;
+  head.vy += dy * stiffness;
+  head.vx *= damping;
+  head.vy *= damping;
+  head.x += head.vx;
+  head.y += head.vy;
+
+  // Head direction (for rotation)
+  let headAngle = Math.atan2(dy, dx);
+
+  // === DRAW DRAGON HEAD – classic side-profile shape ===
+  ctx.save();
+  ctx.translate(head.x, head.y);
+  ctx.rotate(headAngle);
+
+  // Main head (long snout + skull)
+  ctx.beginPath();
+  ctx.moveTo(32, 0);               // snout tip
+  ctx.quadraticCurveTo(10, -18, -8, -12);   // top curve
+  ctx.quadraticCurveTo(-18, 0, -10, 14);    // bottom jaw
+  ctx.quadraticCurveTo(10, 18, 32, 0);      // back to snout
+  ctx.closePath();
+  ctx.fillStyle = '#c41e3a';           // deep dragon red
+  ctx.fill();
+
+  // Glow outline
+  ctx.shadowColor = '#ff5500';
+  ctx.shadowBlur = 40;
+  ctx.strokeStyle = '#ff3300';
+  ctx.lineWidth = 7;
+  ctx.stroke();
+
+  // Horns (two big curved ones)
+  ctx.beginPath();
+  ctx.moveTo(12, -14);
+  ctx.quadraticCurveTo(30, -35, 38, -22);
+  ctx.quadraticCurveTo(28, -18, 12, -14);
+  ctx.moveTo(10, 14);
+  ctx.quadraticCurveTo(28, 35, 36, 22);
+  ctx.quadraticCurveTo(24, 18, 10, 14);
+  ctx.fillStyle = '#8b0000';
+  ctx.fill();
+
+  // Eye – glowing & menacing
+  ctx.beginPath();
+  ctx.arc(18, -6, 7, 0, Math.PI * 2);
+  ctx.fillStyle = '#ffdd00';           // burning yellow
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(20, -6, 3.5, 0, Math.PI * 2);
+  ctx.fillStyle = '#000';
+  ctx.fill();
+
+  // Teeth (upper & lower jaw)
+  for (let t = 0; t < 4; t++) {
+    let tx = 24 - t * 5;
+    let ty = -8 + t * 2;
+    ctx.beginPath();
+    ctx.moveTo(tx, ty);
+    ctx.lineTo(tx + 10, ty - 12);
+    ctx.lineTo(tx + 6, ty);
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fill();
+  }
+  for (let t = 0; t < 3; t++) {
+    let tx = 22 - t * 6;
+    let ty = 10 - t * 1;
+    ctx.beginPath();
+    ctx.moveTo(tx, ty);
+    ctx.lineTo(tx + 12, ty + 10);
+    ctx.lineTo(tx + 8, ty);
+    ctx.fillStyle = '#e0e0e0';
+    ctx.fill();
+  }
+
+  ctx.restore();
+
+  // === BODY & TAIL ===
+  for (let i = 1; i < segments.length; i++) {
+    let prev = segments[i - 1];
+    let curr = segments[i];
+
+    dx = prev.x - curr.x;
+    dy = prev.y - curr.y;
+    let angle = Math.atan2(dy, dx);
+
+    let targetX = prev.x - Math.cos(angle) * segmentLength;
+    let targetY = prev.y - Math.sin(angle) * segmentLength;
+
+    curr.vx += (targetX - curr.x) * stiffness * 0.78;
+    curr.vy += (targetY - curr.y) * stiffness * 0.78;
+    curr.vx *= damping;
+    curr.vy *= damping;
+
+    curr.x += curr.vx;
+    curr.y += curr.vy;
+
+    // Draw segment with scale texture feel
+    let thickness = headSize * (1 - i / segments.length * 0.8);
+    let hue = 5 + i * 6;   // red → orange fire gradient
+
+    ctx.beginPath();
+    ctx.moveTo(prev.x, prev.y);
+    ctx.lineTo(curr.x, curr.y);
+    ctx.strokeStyle = `hsl(${hue}, 100%, 52%)`;
+    ctx.lineWidth = thickness;
+    ctx.lineCap = 'round';
+    ctx.shadowColor = `hsl(${hue}, 100%, 65%)`;
+    ctx.shadowBlur = 25 - i * 0.8;
+    ctx.stroke();
+
+    // Side spikes / dorsal spines
+    if (i % 4 === 0 && i > 3) {
+      let spike = thickness * 1.6;
+      let px = -Math.sin(angle) * spike;
+      let py = Math.cos(angle) * spike;
+
+      ctx.beginPath();
+      ctx.moveTo(curr.x + px * 0.7, curr.y + py * 0.7);
+      ctx.lineTo(curr.x, curr.y);
+      ctx.lineTo(curr.x - px * 0.7, curr.y - py * 0.7);
+      ctx.strokeStyle = `hsl(${hue + 15}, 90%, 70%)`;
+      ctx.lineWidth = thickness * 0.6;
+      ctx.stroke();
+    }
+  }
+
+  // === WINGS (on upper body segments) ===
+  let wingIdx = Math.floor(segmentCount * 0.28);
+  if (segments.length > wingIdx) {
+    let wingSeg = segments[wingIdx];
+    let wingAngle = Math.atan2(wingSeg.vy, wingSeg.vx) + Math.PI / 2;
+
+    ctx.save();
+    ctx.translate(wingSeg.x, wingSeg.y);
+    ctx.rotate(wingAngle);
+
+    // Left wing
+    ctx.beginPath();
+    ctx.moveTo(-10, 0);
+    ctx.quadraticCurveTo(-60, -35, -45, -10);
+    ctx.quadraticCurveTo(-30, -5, -10, 0);
+    ctx.fillStyle = 'rgba(160, 0, 0, 0.6)';
+    ctx.fill();
+
+    // Right wing
+    ctx.beginPath();
+    ctx.moveTo(10, 0);
+    ctx.quadraticCurveTo(60, -35, 45, -10);
+    ctx.quadraticCurveTo(30, -5, 10, 0);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

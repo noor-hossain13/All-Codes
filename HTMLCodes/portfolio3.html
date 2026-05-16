@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noor Hossain | Portfolio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    nav {
+      background-color: #1e293b;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #38bdf8;
+    }
+
+    /* Hero Section */
+    header {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    header img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #38bdf8;
+    }
+
+    header h3 {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    /* About Section */
+    section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    section h2 {
+      text-align: center;
+      color: #38bdf8;
+      margin-bottom: 30px;
+    }
+
+    section p {
+      text-align: center;
+      color: #cbd5e1;
+      font-size: 1.1em;
+    }
+
+    /* Skills */
+    .skills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .skill {
+      background-color: #1e293b;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 1px solid #38bdf8;
+      transition: 0.3s;
+    }
+
+    .skill:hover {
+      background-color: #38bdf8;
+      color: black;
+    }
+
+    /* Projects */
+    .projects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .project {
+      background-color: #1e293b;
+      padding: 20px;
+      border-radius: 10px;
+      width: 280px;
+      border: 1px solid #38bdf8;
+      transition: 0.3s;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+      border-color: #0ea5e9;
+    }
+
+    .project h3 {
+      color: #38bdf8;
+    }
+
+    .project p {
+      color: #cbd5e1;
+      font-size: 0.95em;
+    }
+
+    /* Contact */
+    .contact {
+      text-align: center;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin: 10px;
+      color: #38bdf8;
+      text-decoration: none;
+      border: 1px solid #38bdf8;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .contact a:hover {
+      background-color: #38bdf8;
+      color: black;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1e293b;
+      text-align: center;
+      padding: 15px;
+      color: #94a3b8;
+      margin-top: 50px;
+    }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Noor Hossain</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <img src="https://via.placeholder.com/150" alt="Profile Photo">
+    <h1>Noor Hossain</h1>
+    <h3>Software Engineer</h3>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I am a passionate software engineer who loves building innovative and efficient digital solutions.  
+      I enjoy exploring new technologies and turning ideas into reality through clean and scalable code.
+    </p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="skill">HTML</div>
+      <div class="skill">CSS</div>
+      <div class="skill">Python</div>
+      <div class="skill">C++</div>
+      <div class="skill">C</div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <div class="project">
+        <h3>🏥 Hospital Management System</h3>
+        <p>Manages doctors, patients, and appointments efficiently using a clean and user-friendly interface.</p>
+      </div>
+      <div class="project">
+        <h3>🗳️ Voting System</h3>
+        <p>A secure and modern voting system that ensures fairness and transparency in digital elections.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact">
+      <a href="#">📧 Email</a>
+      <a href="#">💼 LinkedIn</a>
+      <a href="#">🐙 GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Noor Hossain — All Rights Reserved.
+  </footer>
+</body>
+</html>

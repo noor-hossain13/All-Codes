@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Noor Hossain</title>
+  <meta name="description" content="Portfolio of Noor Hossain" />
+  <style>
+    /* ----------------- FONT IMPORT (system first) ----------------- */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+    :root{
+      --bg:#0b0f14;
+      --card:#0f1720;
+      --muted:#9aa4b2;
+      --accent1:#00e5ff;
+      --accent2:#7c4dff;
+      --glass: rgba(255,255,255,0.03);
+      --glass-border: rgba(255,255,255,0.06);
+      --radius:14px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(600px 400px at 10% 10%, rgba(124,77,255,0.08), transparent 8%),
+        radial-gradient(500px 300px at 90% 85%, rgba(0,229,255,0.04), transparent 8%),
+        linear-gradient(180deg,#07090b 0%, #0b0f14 100%);
+      color:#e6eef6;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      scroll-behavior:smooth;
+      padding-bottom:80px;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    nav{
+      position:fixed;
+      left:0;right:0;top:16px;
+      margin:0 auto;
+      max-width:1100px;
+      padding:10px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      z-index:60;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(8px) saturate(120%);
+      border-radius:12px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    }
+
+    .brand{
+      display:flex;gap:12px;align-items:center;
+    }
+    .logo-dot{
+      width:38px;height:38px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      display:inline-block;
+      box-shadow: 0 6px 18px rgba(124,77,255,0.16), 0 3px 10px rgba(0,229,255,0.06);
+    }
+    .brand h3{margin:0;font-size:1rem;letter-spacing:0.6px}
+    .brand p{margin:0;font-size:0.75rem;color:var(--muted);margin-top:2px}
+
+    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center}
+    nav a{color:var(--muted);font-weight:600;font-size:0.95rem;opacity:0.95}
+    nav a:hover{color:var(--accent1)}
+    .socials{display:flex;gap:10px;align-items:center}
+    .icon{
+      display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;
+      background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;
+      transition:transform .18s ease, background .2s;
+    }
+    .icon:hover{transform:translateY(-4px); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+
+   
+    header.hero{
+      min-height:92vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:90px 20px 40px;
+    }
+    .hero-inner{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:32px;
+      align-items:center;
+    }
+
+    /* profile card */
+    .profile{
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border:1px solid var(--glass-border);
+      padding:26px;
+      border-radius:var(--radius);
+      display:flex;
+      gap:18px;
+      align-items:center;
+      box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+      position:relative;
+      overflow:visible;
+    }
+    .avatar{
+      width:120px;height:120px;border-radius:18px;
+      overflow:hidden;border:3px solid rgba(255,255,255,0.04);
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#0b1020,#111316);
+      box-shadow: 0 8px 20px rgba(2,6,23,0.5);
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .p-info h2{margin:0;font-size:1.4rem}
+    .p-info p{margin:6px 0 0;color:var(--muted);font-size:0.9rem}
+
+    .tag{
+      margin-top:12px;padding:6px 10px;border-radius:999px;font-weight:700;font-size:0.85rem;
+      display:inline-block;color:#001018;background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      box-shadow:0 8px 18px rgba(124,77,255,0.12);
+    }
+
+    /* typewriter & main intro */
+    .intro{
+      padding:18px 14px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      border-radius:var(--radius);
+      border:1px solid var(--glass-border);
+      box-shadow: 0 12px 40px rgba(2,6,23,0.45);
+    }
+    .intro h1{
+      font-size:2.2rem;margin:0 0 8px;
+      background: linear-gradient(90deg,var(--accent1),#8be0ff);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .type{
+      font-weight:600;color:var(--accent1);font-size:1.05rem;margin-bottom:10px;
+      display:flex;gap:8px;align-items:center;
+    }
+    .type .cursor{
+      width:2px;height:20px;background:var(--accent1);display:inline-block;animation: blink 1s steps(2,infinite);
+    }
+    @keyframes blink{50%{opacity:0}}
+
+    .intro p.lead{color:var(--muted);margin:8px 0 18px;font-size:1rem;max-width:62ch}
+    .cta{
+      display:flex;gap:12px;flex-wrap:wrap;
+    }
+    .btn{
+      padding:12px 16px;border-radius:10px;font-weight:700;border:none;cursor:pointer;
+      display:inline-flex;gap:10px;align-items:center;
+    }
+    .btn.primary{
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      color:#001018;box-shadow:0 10px 30px rgba(124,77,255,0.12);
+    }
+    .btn.ghost{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)
+    }
+
+    /* floating accent element */
+    .float-accent{
+      position:absolute;right:-36px;top:-36px;width:90px;height:90px;border-radius:22px;
+      background:linear-gradient(135deg,var(--accent2),var(--accent1));
+      filter:blur(28px);opacity:0.18;transform:rotate(18deg);
+    }
+
+    /* ---------- SECTIONS ---------- */
+    main section{
+      max-width:1100px;margin:40px auto;padding:10px 20px;
+    }
+
+    h2.section-title{
+      font-size:1.6rem;margin-bottom:18px;color:var(--accent1);
+      display:flex;align-items:center;gap:12px;
+    }
+
+    /* skills */
+    .skill-grid{
+      display:flex;flex-wrap:wrap;gap:14px;
+    }
+    .skill-pill{
+      padding:10px 14px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      font-weight:700;color:#cfeff7;font-size:0.95rem;
+      display:inline-flex;gap:10px;align-items:center;
+    }
+
+    /* skill bars */
+    .bar{
+      margin-top:14px;background:rgba(255,255,255,0.03);border-radius:10px;padding:6px;border:1px solid rgba(255,255,255,0.02);
+    }
+    .bar > span{
+      display:block;height:12px;border-radius:8px;background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      width:0%;transition:width 1s ease;
+    }
+    .bar-label{display:flex;justify-content:space-between;font-size:0.9rem;color:var(--muted);margin-bottom:8px}
+
+    /* projects */
+    .projects{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.008));
+      border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.03);
+      transition:transform .25s ease, box-shadow .25s;
+      position:relative;overflow:hidden;
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 48px rgba(2,6,23,0.6)}
+    .card h3{margin:0 0 8px;color:var(--accent2)}
+    .card p{color:var(--muted);font-size:0.95rem}
+    .card .tag{position:absolute;right:16px;top:16px;padding:6px 10px;border-radius:999px;font-size:0.8rem;background:rgba(255,255,255,0.02);color:var(--muted)}
+
+    /* contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:22px}
+    .contact-card{
+      padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+    }
+    input[type="text"], input[type="email"], textarea{
+      width:100%;padding:12px;border-radius:10px;background:#071016;border:1px solid rgba(255,255,255,0.03);
+      color:var(--muted);font-size:0.95rem;outline:none;margin-top:8px;
+    }
+    textarea{min-height:120px;resize:vertical}
+    .send-btn{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#001018;font-weight:800;margin-top:8px;cursor:pointer}
+
+    /* footer */
+    footer{
+      max-width:1100px;margin:36px auto 20px;padding:18px 20px;border-radius:12px;background:transparent;color:var(--muted);
+      display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(255,255,255,0.02)
+    }
+
+    /* small screens */
+    @media (max-width:980px){
+      .hero-inner{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      nav{padding:10px}
+      .profile{justify-content:flex-start}
+      .avatar{width:96px;height:96px}
+    }
+
+    @media (max-width:480px){
+      nav ul{display:none}
+      .brand p{display:none}
+      .intro h1{font-size:1.6rem}
+      header.hero{padding-top:70px}
+      .logo-dot{width:32px;height:32px}
+    }
+
+    /* small animation helpers */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .65s ease, transform .65s ease}
+    .reveal.show{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav role="navigation" aria-label="Main Navigation">
+    <div class="brand">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <div>
+        <h3>Noor Hossain</h3>
+        <p>Programmer</p>
+      </div>
+    </div>
+
+    <ul role="menubar" aria-hidden="false">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="socials" aria-hidden="false">
+      <!-- placeholders: replace href with your GitHub / LinkedIn -->
+      <a class="icon" href="https://github.com/your-github" target="_blank" rel="noopener" title="GitHub (placeholder)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.94.58.11.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.41-3.88-1.41-.53-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.78 2.7 1.27 3.36.98.1-.77.4-1.27.72-1.56-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.52.11-3.17 0 0 .97-.31 3.18 1.18A11 11 0 0 1 12 6.8c.98.01 1.97.13 2.89.39 2.2-1.5 3.16-1.18 3.16-1.18.64 1.65.24 2.87.12 3.17.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.41.35.77 1.05.77 2.12 0 1.53-.01 2.77-.01 3.15 0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" fill="currentColor"/></svg>
+      </a>
+
+      <a class="icon" href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener" title="LinkedIn (placeholder)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.98 3.5C3.88 3.5 3 4.38 3 5.48c0 1.09.88 1.98 1.98 1.98h.02c1.1 0 1.98-.89 1.98-1.98C6.98 4.38 6.1 3.5 4.98 3.5zM3.5 8.99H6.5V20H3.5V8.99zM9 8.99h2.88v1.48h.04c.4-.76 1.37-1.56 2.82-1.56 3.02 0 3.58 1.99 3.58 4.58V20h-3V14.7c0-1.28-.02-2.93-1.79-2.93-1.8 0-2.07 1.4-2.07 2.83V20H9V8.99z" fill="currentColor"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-inner">
+      <div class="profile reveal">
+        <div class="avatar" aria-hidden="true">
+          <!-- placeholder photo -->
+          <img src="https://via.placeholder.com/400x400.png?text=Noor+Hossain" alt="Profile photo - placeholder">
+        </div>
+
+        <div>
+          <div class="p-info">
+            <h2>Noor Hossain</h2>
+            <p>Software Engineer</p>
+            <div class="tag" aria-hidden="true">Techy • Problem Solver</div>
+          </div>
+          <div style="margin-top:14px;color:var(--muted);font-size:0.95rem;max-width:260px">
+            <strong>Location:</strong> Cumilla, Bangladesh<br>
+            <strong>Email:</strong> hossain16112@gmail.com
+          </div>
+        </div>
+
+        <div class="float-accent" aria-hidden="true"></div>
+      </div>
+
+      <div class="intro reveal">
+        <h1>Build. Scale. Ship.</h1>
+
+        <div class="type" aria-hidden="true">
+          <div id="type-text">Software Engineer</div><span class="cursor"></span>
+        </div>
+
+        <p class="lead">
+          I'm Noor — a Software Engineer who crafts robust, maintainable systems and clean user experiences.
+          My work focuses on backend reliability, efficient algorithms, and intuitive frontend interfaces.
+          I enjoy turning complex problems into elegant solutions.
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="#projects" title="See projects">View Projects</a>
+          <a class="btn ghost" href="#contact" title="Contact me">Contact</a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <main>
+    <section id="about" class="reveal">
+      <h2 class="section-title">About</h2>
+      <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px;color:var(--muted);font-size:1rem;line-height:1.6">
+          I build production-ready applications with a focus on performance and security.
+          My preferred stack includes Python for backend tasks, and modern frontend technologies for interactive UIs.
+          I love working on systems that have real user impact — like hospital management solutions and secure voting platforms.
+        </div>
+
+        <div style="width:320px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="color:#e6eef6">Key Expertise</strong>
+            <small style="color:var(--muted)">5+ Projects</small>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="bar-label"><span>Backend (Python)</span><span>90%</span></div>
+            <div class="bar" data-width="90"><span></span></div>
+
+            <div class="bar-label"><span>Frontend (HTML/CSS)</span><span>85%</span></div>
+            <div class="bar" data-width="85"><span></span></div>
+
+            <div class="bar-label"><span>C / C++</span><span>75%</span></div>
+            <div class="bar" data-width="75"><span></span></div>
+
+            <div class="bar-label"><span>System Design</span><span>78%</span></div>
+            <div class="bar" data-width="78"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="reveal">
+      <h2 class="section-title">Skills</h2>
+      <div class="skill-grid" style="margin-bottom:14px">
+        <div class="skill-pill">HTML</div>
+        <div class="skill-pill">CSS</div>
+        <div class="skill-pill">Python</div>
+        <div class="skill-pill">C++</div>
+        <div class="skill-pill">C</div>
+        <div class="skill-pill">REST APIs</div>
+        <div class="skill-pill">SQL</div>
+        <div class="skill-pill">Git</div>
+      </div>
+      <div style="color:var(--muted);font-size:0.95rem;max-width:72ch">
+        Comfortable designing backend services, writing efficient algorithms, and building responsive front-ends.
+        Always learning — currently exploring cloud deployment and advanced security practices.
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="reveal">
+      <h2 class="section-title">Highlighted Projects</h2>
+      <div class="projects">
+        <article class="card" tabindex="0" role="article">
+          <div class="tag">Web • Fullstack</div>
+          <h3>Hospital Management System</h3>
+          <p>A production-oriented hospital management solution: patient records, doctor scheduling, appointment booking, and reporting. Built for reliability and data integrity with secure authentication.</p>
+        </article>
+
+        <article class="card" tabindex="0" role="article">
+          <div class="tag">Security • Web</div>
+          <h3>Secure Voting System</h3>
+          <p>A scalable voting platform with user verification, tamper-evident logs, and real-time tallying. Designed with privacy and auditability in mind for trustworthy results.</p>
+        </article>
+
+        <article class="card" tabindex="0" role="article">
+          <div class="tag">Utility</div>
+          <h3>Tooling & Scripts</h3>
+          <p>Collection of automation scripts and developer tools to speed up workflows — deployments, data migrations, and test harnesses.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+      <h2 class="section-title">Contact</h2>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <strong style="color:#e6eef6">Get in touch</strong>
+          <p style="color:var(--muted);margin-top:8px">Use the form to send a quick message — placeholder contact will not actually send. Replace with your backend or a mailto link to enable.</p>
+
+          <form onsubmit="event.preventDefault(); alert('This is a demo placeholder. Replace form action with your backend or mailto.');">
+            <label style="display:block;margin-top:12px;color:var(--muted)">Name</label>
+            <input type="text" placeholder="Your name" required>
+            <label style="display:block;margin-top:12px;color:var(--muted)">Email</label>
+            <input type="email" placeholder="hossain16112@gmail.com" required>
+            <label style="display:block;margin-top:12px;color:var(--muted)">Message</label>
+            <textarea placeholder="Write your message..." required></textarea>
+            <button class="send-btn" type="submit">Send Message</button>
+          </form>
+        </div>
+
+        <aside style="min-width:220px">
+          <div style="margin-bottom:14px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03)">
+            <strong style="color:#e6eef6">Contact Info</strong>
+            <p style="color:var(--muted);margin:8px 0 0">Email: <br><a href="mailto:you@placeholder.com" style="color:var(--accent1)">hoss</a></p>
+            <p style="color:var(--muted);margin:8px 0 0">Location: Dhaka, Bangladesh</p>
+            <p style="color:var(--muted);margin:8px 0 0">CV: <em style="color:var(--muted)">Not added</em></p>
+          </div>
+
+          <div style="padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03)">
+            <strong style="color:#e6eef6">Social</strong>
+            <div style="display:flex;gap:10px;margin-top:12px">
+              <a class="icon" href="https://github.com/noor-hossain13" target="_blank" rel="noopener" title="GitHub (placeholder)">Git</a>
+              <a class="icon" href="https://www.linkedin.com/in/noor-hossain13/" target="_blank" rel="noopener" title="LinkedIn (placeholder)">In</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>© <strong>Noor Hossain</strong> — Software Engineer</div>
+    <div style="color:var(--muted)">Made with care • Dark Modern • Placeholder contact</div>
+  </footer>
+
+  <!-- SCRIPT: typewriter, reveal, progress bars -->
+  <script>
+    // Typewriter effect for role text
+    (function(){
+      const roles = ['Software Engineer', 'Backend • Frontend', 'Problem Solver', 'Systems Developer'];
+      let i=0, j=0, showing='';
+      const el = document.getElementById('type-text');
+      const cursor = document.querySelector('.cursor');
+      function step(){
+        if(i >= roles.length) i = 0;
+        const word = roles[i];
+        showing = word.slice(0, j);
+        el.textContent = showing;
+        if(j < word.length){ j++; setTimeout(step, 90); }
+        else { setTimeout(()=>{ erase(); }, 1200); }
+      }
+      function erase(){
+        const word = roles[i];
+        if(j>0){ j--; showing = word.slice(0, j); el.textContent = showing; setTimeout(erase, 40); }
+        else { i++; setTimeout(step, 220); }
+      }
+      step();
+    })();
+
+    // reveal-on-scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target) }
+      })
+    }, {threshold:0.12});
+    revealEls.forEach(el=>io.observe(el));
+
+    // animate skill bars when visible
+    const bars = document.querySelectorAll('.bar');
+    const barObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){
+          const el = ent.target.querySelector('span');
+          const w = ent.target.getAttribute('data-width') || '70';
+          el.style.width = w + '%';
+          barObserver.unobserve(ent.target);
+        }
+      })
+    }, {threshold:0.35});
+    bars.forEach(b=>barObserver.observe(b));
+  </script>
+</body>
+</html>
